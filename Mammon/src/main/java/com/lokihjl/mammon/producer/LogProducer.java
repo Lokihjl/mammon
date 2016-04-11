@@ -29,7 +29,6 @@ public class LogProducer {
         if(StringUtils.isEmpty(topicName) || StringUtils.isEmpty(message)) {
             return ;
         }
-        
         KeyedMessage<String, String> km = new KeyedMessage<String, String>(topicName, message) ;
         inner.send(km);
     }

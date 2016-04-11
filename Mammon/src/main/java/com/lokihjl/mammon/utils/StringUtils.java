@@ -10,7 +10,6 @@ public class StringUtils {
         if(null == str || str.trim().equals("")) {
             return true ;
         }
-        
         return false ;
     }
     
