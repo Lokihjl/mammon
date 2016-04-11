@@ -30,6 +30,7 @@ public class LogProducer {
             return ;
         }
         KeyedMessage<String, String> km = new KeyedMessage<String, String>(topicName, message) ;
+        
         inner.send(km);
     }
 
