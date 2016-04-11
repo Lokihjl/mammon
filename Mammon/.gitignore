@@ -1,0 +1,12 @@
+/bin
+/target
+*.project
+*.settings
+*.classpath
+/*/.gitignore
+*.launch
+*.idea
+/.idea
+*.metadata
+/Win7
+/git
