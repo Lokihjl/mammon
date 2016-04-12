@@ -1,12 +1,16 @@
 package com.lokihjl.mammon.producer;
 
-import java.util.Properties;
-
 import com.lokihjl.mammon.utils.StringUtils;
-
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
+
+import static java.lang.Thread.*;
 
 /**
  * @author hjl
@@ -33,5 +37,44 @@ public class LogProducer {
         
         inner.send(km);
     }
+
+    public void send(String topicName, Collection<String> messages) {
+        if(StringUtils.isEmpty(topicName) || messages == null || messages.isEmpty()) {
+            System.out.print("return");
+            return ;
+        }
+        List<KeyedMessage<String, String>> kms = new ArrayList<KeyedMessage<String, String>>() ;
+        for(String entry: messages) {
+            KeyedMessage<String, String> km = new KeyedMessage<String, String>(topicName, entry) ;
+            kms.add(km);
+        }
+
+        inner.send(kms);
+
+    }
+
+    public void close() {
+        inner.close();
+    }
+
+    public static void main(String[] args) {
+        LogProducer producer = null;
+        try {
+            producer = new LogProducer();
+            int i = 0 ;
+            while (true) {
+                producer.send("test-topic", "this is a sample" + i);
+                i++;
+                sleep(2000);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (producer != null) {
+                producer.close();
+            }
+        }
+    }
+
 
 }
